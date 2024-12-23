@@ -2,14 +2,14 @@ import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
-import MarvelService from "../../services/MarvelService";
+// import MarvelService from "../../services/MarvelService";
 
 import decoration from '../../resources/img/vision.png';
 
-const marvelService = new MarvelService();
+// const marvelService = new MarvelService();
 
-marvelService.getAllCharacters().then(res => res.data.results.forEach(item => console.log(item.name)));
-marvelService.getCharacterById(1011052).then(res => console.log(res));
+// marvelService.getAllCharacters().then(res => res.data.results.forEach(item => console.log(item.name)));
+// marvelService.getCharacterById(1011052).then(res => console.log(res));
 
 const App = () => {
     return (

@@ -1,6 +1,7 @@
 class MarvelService {
   _apiBase = "https://gateway.marvel.com:443/v1/public/"
   _apiKey = "33384c6e2d8e0b1c9d6271fd34b346ba" // из личного кабинета 
+  _baseOffset = 210
 
   getResourse = async (url) => {
     let res = await fetch(url);
@@ -12,8 +13,8 @@ class MarvelService {
     return await res.json();
   }
 
-  getAllCharacters = async () => {
-    const res = await this.getResourse(`${this._apiBase}characters?limit=9&offset=210&apikey=${this._apiKey}`);  // сюда попадают все данные из ответа сервера
+  getAllCharacters = async (offset = this._baseOffset) => {
+    const res = await this.getResourse(`${this._apiBase}characters?limit=9&offset=${offset}&apikey=${this._apiKey}`);  // сюда попадают все данные из ответа сервера
     // res.data.results -- сюда попадает массив с объектами всей информации о персонажах
     return res.data.results.map(this._transformCharacter) // проходим по этому массиву через map и трансформируем каждый элемент (персонажа) через _transformCharacter
   }

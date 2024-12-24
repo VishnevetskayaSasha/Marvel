@@ -7,6 +7,7 @@ import Skeleton from '../skeleton/Skeleton'
 import './charInfo.scss';
 
 
+
 class CharInfo extends Component {
     state = {
         char: null,
@@ -39,6 +40,9 @@ class CharInfo extends Component {
             .getCharacterById(charId)
             .then(this.onCharLoaded)
             .catch(this.onError)
+
+            // для теста предохранителя
+            // this.foo.bar = 0;
     }
 
     onCharLoaded = (char) => {

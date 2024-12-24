@@ -1,3 +1,4 @@
+import { Component } from "react";
 import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
@@ -11,20 +12,31 @@ import decoration from '../../resources/img/vision.png';
 // marvelService.getAllCharacters().then(res => res.data.results.forEach(item => console.log(item.name)));
 // marvelService.getCharacterById(1011052).then(res => console.log(res));
 
-const App = () => {
-    return (
-        <div className="app">
-            <AppHeader/>
-            <main>
-                <RandomChar/>
-                <div className="char__content">
-                    <CharList/>
-                    <CharInfo/>
-                </div>
-                <img className="bg-decoration" src={decoration} alt="vision"/>
-            </main>
-        </div>
-    )
+class App extends Component {
+    state = {
+        selectedChar: null
+    }
+
+    onCharSelected = (id) => {
+        this.setState({
+            selectedChar: id
+        })
+    }
+    render() {
+        return (
+            <div className="app">
+                <AppHeader/>
+                <main>
+                    <RandomChar/>
+                    <div className="char__content">
+                        <CharList onCharSelected = {this.onCharSelected}/>
+                        <CharInfo charId = {this.state.selectedChar}/>
+                    </div>
+                    <img className="bg-decoration" src={decoration} alt="vision"/>
+                </main>
+            </div>
+        )
+    }
 }
 
 export default App;

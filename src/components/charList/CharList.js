@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import MarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Spinner from '../spinner/spinner';
@@ -108,5 +110,10 @@ const RenderItems = ({arr, props}) => {
         </ul>
     )
 }
+
+CharList.propTypes = {
+    onCharSelected: PropTypes.func.isRequired
+}
+
 
 export default CharList;

@@ -92,12 +92,38 @@ class CharList extends Component {
 
 //простой рендерящий компонент (в нем нет никкакой логики, только рендер куска кода)
 const RenderItems = ({arr, props}) => {
-    const items = arr.map((item) => {
+
+    const itemRefs = [];
+
+    const setRef = (ref) => {
+        itemRefs.push(ref);
+    }
+
+    const focusOnItem = (id) => {
+        itemRefs.forEach(item => item.classList.remove('char__item_selected'));
+        itemRefs[id].classList.add('char__item_selected');
+        itemRefs[id].focus();
+    }
+
+    const items = arr.map((item, i) => {
         let imgStyle;
         if (item.thumbnail.includes("image_not_available")) {imgStyle = {'objectFit' : 'unset'}}
         return (
-            <li className="char__item" key={item.id} 
-                onClick={() => props.onCharSelected(item.id)}> 
+            <li className="char__item" 
+                key={item.id} 
+                tabIndex={0}
+                ref={setRef}
+                onClick={() => {
+                    props.onCharSelected(item.id);
+                    focusOnItem(i)
+                }}
+                onKeyPress={(e) => {
+                    if (e.key === ' ' || e.key === "Enter") {
+                        props.onCharSelected(item.id);
+                        focusOnItem(i);
+                    }
+                }}
+                > 
                 <img style={imgStyle} src={item.thumbnail} alt={item.name} />
                 <div className="char__name">{item.name}</div>
             </li>

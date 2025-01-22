@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner'
 import ErrorMessage from '../errorMessage/errorMessage';
 
@@ -10,11 +10,7 @@ import mjolnir from '../../resources/img/mjolnir.png';
 const RandomChar = () => {
 
     const [char, setChar] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-
-
-    const marvelService = new MarvelService();
+    const {loading, error, getCharacterById, clearError} =  useMarvelService();
 
     useEffect(() => {
         updateChar()
@@ -22,25 +18,13 @@ const RandomChar = () => {
 
     const onCharLoaded = (char) => {
         setChar(char);
-        setLoading(false)
-    }
-
-    const oncharLoading = () => {
-        setLoading(true);
-    }
-
-    const onError = () => {
-        setLoading(false)
-        setError(true)
     }
 
     const updateChar = () => {
+        clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
-        oncharLoading()
-        marvelService
-            .getCharacterById(id)
+        getCharacterById(id)
             .then(onCharLoaded)
-            .catch(onError)
     }
     
     const errorMessage = error ? <ErrorMessage/> : null;
@@ -73,10 +57,16 @@ const RandomChar = () => {
 // простой рендерящий компонент (в нем нет никкакой логики, только рендер куска кода)
 const View = ({char}) => {
     const {name, description, thumbnail, homepage, wiki} = char;
+    let imgStyle = {'objectFit' : 'cover'};
+    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+        imgStyle = {'objectFit' : 'contain'};
+    }
+
     return(
         <div className="randomchar__block">
             <img src={thumbnail} alt="Random character" 
-                className={thumbnail.includes("image_not_available") ? "randomchar__img randomchar__img_not-available" : "randomchar__img"}/>
+                // className={thumbnail.includes("image_not_available") ? "randomchar__img randomchar__img_not-available" : "randomchar__img"}
+                className="randomchar__img" style={imgStyle}/>
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">

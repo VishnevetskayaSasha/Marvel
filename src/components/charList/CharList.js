@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Spinner from '../spinner/spinner';
 
@@ -10,31 +10,23 @@ import './charList.scss';
 const CharList = (props) => {
 
     const [charList, setCharList] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [newItemLoading, setNewItemLoading]  = useState(false);
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
 
     
-    const marvelService = new MarvelService();
+    const {loading, error, getAllCharacters} =  useMarvelService();
 
     useEffect(() => { // т.к. useEffect запускается после того как компонент отрендерился, 
     // поэтому мы можем использовать функцию onRequest выше чем она объявлена 
-        onRequest();
+        onRequest(offset, true);
     }, []) // пустой массив зависимостей - иммитация componentDidMount
 
     
-    const onRequest = (offset) => { // запрос на сервер (1)
-        onCharListLoading(); // при первичной загрузке не имеет смысла, но при клике на кнопку "Загрузить еще" будет блочить кнопку (3)
-        marvelService
-            .getAllCharacters(offset) // получаем элементы с сервера (4)
+    const onRequest = (offset, initial) => { // запрос на сервер (1)
+        initial ? setNewItemLoading(false) : setNewItemLoading(true); 
+        getAllCharacters(offset) // получаем элементы с сервера (4)
             .then(onCharListLoaded) // запускается onCharListLoaded (5)
-            .catch(onError)
-    }
-
-    const onCharListLoading = () => {
-        setNewItemLoading(true);
     }
 
     const onCharListLoaded = (newCharList) => { // получает в себя новые карточки (6)
@@ -46,27 +38,19 @@ const CharList = (props) => {
         // используем колбек функцию т.к. нам важно предыдущее значения стейта 
         setCharList(charList => [...charList, ...newCharList]); // charList - уже имеющиеся карточки, newCharList - новые карточки
         // при первом запуске charList - пустой массив
-        setLoading(loading => false);
         setNewItemLoading(newItemLoading => false);
         setOffset(offset => offset + 9); // после успешного запроса на сервер будет увеличивать отступ на 9 (9 новых карточек)
         setCharEnded(charEnded => ended)
     }
 
-    const onError = () => {
-        // здесь нам не важно предыдущее значение стейта - если произошла ошибка setError(true) в любом случае устанавливем true
-        // и setLoading  любом случае устанавливем false
-        setLoading(false);
-        setError(true)
-    }
-
     const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error) ? <RenderItems arr = {charList} props = {props}/> : null;
+    const spinner = loading && !newItemLoading ? <Spinner/> : null;
+    //const content = !(loading || error) ? <RenderItems arr = {charList} props = {props}/> : null;
     return (
         <div className="char__list">
             {errorMessage}
             {spinner}
-            {content}
+            <RenderItems arr = {charList} props = {props}/>
             <button 
                 className="button button__main button__long"
                 disabled = {newItemLoading}

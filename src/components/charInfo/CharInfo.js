@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
@@ -91,7 +92,9 @@ const View = ({char}) => {
                     comicsNew.map((item, i) => {
                         return (
                             <li className="char__comics-item" key={i}>
-                                {item.name}
+                                <Link to={`/comics/${item.resourceURI.split('/').pop()}`} >
+                                    {item.name}
+                                </Link>
                             </li>
                         )
                     }) : `There is no comics with ${name}`

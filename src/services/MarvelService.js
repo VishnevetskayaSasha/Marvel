@@ -18,7 +18,6 @@ const  useMarvelService = () => {
   const getCharacterById = async (id) => {
     const res = await request(`${_apiBase}characters/${id}?apikey=${_apiKey}`); // все данные из ответа сервера
     // res.data.results[0] --  все данные о персонаже с сервера
-    console.log(res.data)
     return _transformCharacter(res.data.results[0]) // только нужные нам данные (трансформируются через _transformCharacter) 
   }
 

@@ -63,7 +63,7 @@ const SearchForm = () => {
             <button
               className="button button__main"
               type="submit" 
-              disabled={loading}>
+              disabled={process === 'loading'}>
                 <div className="inner">Find</div>
             </button>
           </div>

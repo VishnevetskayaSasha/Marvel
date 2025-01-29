@@ -11,7 +11,7 @@ import "./searchForm.scss"
 const SearchForm = () => {
 
   const [char, setChar] = useState(null);
-  const {loading, error, getCharacterByName, clearError} = useMarvelService();
+  const {loading, error, getCharacterByName, clearError, process, setProcess} = useMarvelService();
 
   const onCharLoaded = (char) => {
     setChar(char);
@@ -21,10 +21,12 @@ const SearchForm = () => {
     clearError();
 
     getCharacterByName(name)
-        .then(onCharLoaded);
+        .then(onCharLoaded)
+        .then(() => setProcess('confirmed'));
+
   }
 
-  const errorMessage = error ? <div className="form__critical-error"><ErrorMessage /></div> : null;
+  const errorMessage = process === "error" ? <div className="form__critical-error"><ErrorMessage /></div> : null;
   const result = !char ? null : char.length > 0 ?
                 <div className="form__wrapper">
                   <div className="form__success">There is! Visit {char[0].name} page?</div>

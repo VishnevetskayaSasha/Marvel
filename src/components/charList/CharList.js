@@ -8,6 +8,25 @@ import Spinner from '../spinner/spinner';
 
 import './charList.scss';
 
+const setContent = (process, Component, newItemLoading) => {
+    switch (process) {
+        case "waiting": 
+            return <Spinner/> ;
+            break;
+        case "loading": 
+            return newItemLoading ? <Component/> : <Spinner/> ;
+            break;
+        case "confirmed": 
+            return <Component/>; 
+            break;
+        case "error": 
+            return <ErrorMessage/>;
+            break;
+        default: 
+            throw new Error("Unexpected process state")
+    }
+  } 
+
 const CharList = (props) => {
 
     const [charList, setCharList] = useState([]);
@@ -16,7 +35,7 @@ const CharList = (props) => {
     const [charEnded, setCharEnded] = useState(false);
 
     
-    const {loading, error, getAllCharacters} =  useMarvelService();
+    const {loading, error, getAllCharacters, process, setProcess} =  useMarvelService();
 
     useEffect(() => { // т.к. useEffect запускается после того как компонент отрендерился, 
     // поэтому мы можем использовать функцию onRequest выше чем она объявлена 
@@ -28,6 +47,7 @@ const CharList = (props) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true); 
         getAllCharacters(offset) // получаем элементы с сервера (4)
             .then(onCharListLoaded) // запускается onCharListLoaded (5)
+            .then(() => setProcess("confirmed")) // ручная установка состояния confirmed
     }
 
     const onCharListLoaded = async (newCharList) => { // получает в себя новые карточки (6)
@@ -44,14 +64,17 @@ const CharList = (props) => {
         setCharEnded(charEnded => ended)
     }
 
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading && !newItemLoading ? <Spinner/> : null;
+    //const errorMessage = error ? <ErrorMessage/> : null;
+    //const spinner = loading && !newItemLoading ? <Spinner/> : null;
     //const content = !(loading || error) ? <RenderItems arr = {charList} props = {props}/> : null;
     return (
         <div className="char__list">
-            {errorMessage}
+            {/* {errorMessage}
             {spinner}
-            <RenderItems arr = {charList} props = {props}/>
+            <RenderItems arr = {charList} props = {props}/> */}
+            {
+                setContent(process, () => <RenderItems arr = {charList} props = {props}/>, newItemLoading)
+            }
             <button 
                 className="button button__main button__long"
                 disabled = {newItemLoading}

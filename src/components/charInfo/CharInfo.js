@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import setContent from '../../utils/setContent';
 
 import useMarvelService from '../../services/MarvelService';
-import Spinner from '../spinner/spinner';
-import ErrorMessage from '../errorMessage/errorMessage';
-import Skeleton from '../skeleton/Skeleton'
+// import Spinner from '../spinner/spinner';
+// import ErrorMessage from '../errorMessage/errorMessage';
+// import Skeleton from '../skeleton/Skeleton'
 
 import './charInfo.scss';
 
@@ -16,7 +17,7 @@ const CharInfo = (props) => {
     const [char, setChar] = useState(null);
 
 
-    const {loading, error, getCharacterById, clearError} =  useMarvelService();
+    const {loading, error, getCharacterById, clearError, process, setProcess} =  useMarvelService();
 
     useEffect(() => {
         updateChar();
@@ -33,6 +34,7 @@ const CharInfo = (props) => {
         clearError()
         getCharacterById(charId)
             .then(onCharLoaded)
+            .then(() => setProcess("confirmed")) // ручная установка состояния confirmed
 
             // для теста предохранителя
             // this.foo.bar = 0;
@@ -42,26 +44,30 @@ const CharInfo = (props) => {
         setChar(char);
     }
 
-    const skeleton =  char || loading || error ? null : <Skeleton/>
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error || !char) ? <View char = {char}/> : null;
+
+    // const skeleton =  char || loading || error ? null : <Skeleton/>
+    // const errorMessage = error ? <ErrorMessage/> : null;
+    // const spinner = loading ? <Spinner/> : null;
+    // const content = !(loading || error || !char) ? <View char = {char}/> : null;
     
 
     return (
         <div className="char__info">
-            {skeleton}
+            {/* {skeleton}
             {errorMessage}
             {spinner}
-            {content}
+            {content} */}
+            {
+                setContent(process, View, char) // смотрит какое сейчас состояние процесса и рендерит нужный компонент
+            }
         </div>
     )
     
     
 }
 
-const View = ({char}) => {
-    const {name, description, thumbnail, homepage, wiki, comics} = char
+const View = ({data}) => {
+    const {name, description, thumbnail, homepage, wiki, comics} = data;
     const comicsNew = comics.length > 10  ? comics.slice(0, 10) : comics 
 
     let imgStyle;

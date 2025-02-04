@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Marvel info Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+__Описание проекта__
 
-## Available Scripts
+React приложение с информацией о героях вселенной Marvel и комиксах, связанных с ними.   
+Все данные подтягиваются из Marvel API: https://developer.marvel.com/
 
-In the project directory, you can run:
+Ссылка на GitHub Pages: https://vishnevetskayasasha.github.io/Marvel/   
+Ссылка на макет в Figma: https://www.figma.com/design/xiC1B6ZlHvbiUK6FO3caxN/Marvel-DB?node-id=0-1&p=f 
 
-### `npm start`
+__Функционал проекта__
+* Отображение рандомного персонажа + смена по клику;
+* Вывод списка персонажей (главная страница) + списка комиксов (страница Comics) + подгрузка новых карточек по клику на "load more";
+* Отображение информации о персонаже по клику на него на главной странице + список комиксов с его участием;
+* Отображение информации о комиксе по клику на него на странице Comics или из списка комиксов конкретного персонажа;
+* Поиск персонажа по имени; 
+* Отображение спиннера при загрузке данных и картинки "что-то пошло не так" при ошибке;
+* Реализация страницы 404;
+* Роутинг приложения;
+* Реализация хука запроса на сервер.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+__Технологии:__
+* JavaScript ES6
+* React
+  * Хуки: useState, useEffect, useRef, useMemo, useCallback
+* React Router
+* Formik + Yup
+* Helmet
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+__Как работать с проектом:__
+1. Откройте консоль и перейдите в папку, куда хотите сохранить проект;
+2. Клонируйте проект в выбранную папку `git clone https://github.com/VishnevetskayaSasha/Marvel.git`;
+3. Перейдите в папку скопированного проекта и установите пакеты `npm install`;
+4. Запустите сборку в режиме разработки `npm start`.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

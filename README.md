@@ -3,10 +3,10 @@
 __Описание проекта__
 
 React приложение с информацией о героях вселенной Marvel и комиксах, связанных с ними.   
-Все данные подтягиваются из Marvel API: https://developer.marvel.com/
+Все данные подтягиваются из [Marvel API](https://developer.marvel.com/)
 
-Ссылка на GitHub Pages: https://vishnevetskayasasha.github.io/Marvel/   
-Ссылка на макет в Figma: https://www.figma.com/design/xiC1B6ZlHvbiUK6FO3caxN/Marvel-DB?node-id=0-1&p=f 
+✅ [Ссылка на GitHub Pages](https://vishnevetskayasasha.github.io/Marvel/)   
+🔥 [Макет в Figma](https://www.figma.com/design/xiC1B6ZlHvbiUK6FO3caxN/Marvel-DB?node-id=0-1&p=f)
 
 __Функционал проекта__
 * Отображение рандомного персонажа + смена по клику;

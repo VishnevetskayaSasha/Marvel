@@ -106,13 +106,15 @@ const RenderItems = ({arr, props}) => {
         let imgStyle;
         if (item.thumbnail.includes("image_not_available")) {imgStyle = {'objectFit' : 'unset'}}
         
+        
         return (
         //    <CSSTransition key={item.id} in={true} timeout={500} classNames="char__item">
-                <li className="char__item" 
+                <li className="char__item "
                     key={item.id}
                     tabIndex={0}
                     ref={el => itemRefs.current[i] = el}
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.preventDefault();
                         props.onCharSelected(item.id);
                         focusOnItem(i)
                     }}

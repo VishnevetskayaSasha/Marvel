@@ -77,11 +77,11 @@ const View = ({data}) => {
                 <p className="randomchar__descr">
                     {description}
                 </p>
-                <div className="randomchar__btns">
-                    <a href={homepage} className="button button__main">
+                <div data-tooltip="Страницы Homepage и Wiki пока не работают. Проблемы с данными у API Marvel Comics. Ждем, когда починят" className="randomchar__btns">
+                    <a target="_blank" rel="noopener noreferrer" href={homepage} className="button button__main">
                         <div className="inner">homepage</div>
                     </a>
-                    <a href={wiki} className="button button__secondary">
+                    <a target="_blank" rel="noopener noreferrer" href={wiki} className="button button__secondary">
                         <div className="inner">Wiki</div>
                     </a>
                 </div>

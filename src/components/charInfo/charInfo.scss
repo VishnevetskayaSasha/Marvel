@@ -63,3 +63,24 @@
     }
 
 }
+[data-tooltip] {
+    position: relative; /* Относительное позиционирование */ 
+}
+[data-tooltip]::after {
+    content: attr(data-tooltip); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    width: 280px; /* Ширина подсказки */
+    left: 0; top: 0; /* Положение подсказки */
+    background: #9F0013; /* Синий цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 0.5em; /* Поля вокруг текста */
+    box-shadow: 0 5px 20px #9F0013; /* Параметры тени */
+    pointer-events: none; /* Подсказка */
+    opacity: 0; /* Подсказка невидима */
+    transition: 1s; /* Время появления подсказки */
+} 
+[data-tooltip]:hover::after {
+    opacity: 1; /* Показываем подсказку */
+    top: -6em; /* Положение подсказки */
+    right: 3em;
+}
